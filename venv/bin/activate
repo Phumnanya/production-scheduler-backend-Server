@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV=/mnt/c/Users/Eustace/Desktop/web1/React-files/Hanover_Health/backend/venv
+VIRTUAL_ENV=/home/eustace/projects/Backend/venv
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
