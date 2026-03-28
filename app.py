@@ -2,15 +2,37 @@ from flask import Flask, jsonify, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import text
-from flask_cors import CORS  # to allow React access
+from flask_cors import CORS
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 CORS(app)  # enable CORS for React
+load_dotenv()  # Load the .env file
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://eustace:Menezman6860@localhost/production_scheduler'
+# Access the .env variables
+user = os.getenv("DB_USER")
+pw = os.getenv("DB_PASS")
+host = os.getenv("DB_HOST")
+port = os.getenv("DB_PORT")
+db = os.getenv("DB_NAME")
+
+# format: postgresql://username:password@host:port/database
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user}:{pw}@{host}:{port}/{db}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
+# connection test
+with app.app_context():
+    try:
+        # This executes a simple 'SELECT 1' to check the connection
+        db.session.execute(db.text('SELECT 1'))
+        print("\n✅ Database connection successful!")
+        print(f"Connected to: {os.getenv('DB_NAME')} at {os.getenv('DB_HOST')}")
+    except Exception as e:
+        print("\n❌ Database connection failed!")
+        print(f"Error: {e}")
 
 # Define a model (table)
 class database(db.Model):

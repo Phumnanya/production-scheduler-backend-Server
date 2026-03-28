@@ -25,3 +25,5 @@ instance/
 Thumbs.dbvenv/
 __pycache__/
 *.pyc
+.env
+.env
