@@ -49,7 +49,7 @@ class database(db.Model):
 with app.app_context():
     db.create_all()
 
-# get orders from db Route
+# fetch orders from the db Route
 @app.route("/orders", methods=["GET"])
 def get_orders():
     orders = database.query.all()
@@ -67,7 +67,7 @@ def get_orders():
         })
     return jsonify(output)
 
-#add new orders route
+#add new orders to the db route
 @app.route("/orders", methods=["POST"])
 def add_order():
     data = request.get_json()
