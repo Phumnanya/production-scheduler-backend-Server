@@ -17,8 +17,17 @@ host = os.getenv("DB_HOST")
 port = os.getenv("DB_PORT")
 db = os.getenv("DB_NAME")
 
-# format: postgresql://username:password@host:port/database
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user}:{pw}@{host}:{port}/{db}'
+# Create the local fallback URI
+local_uri = f'postgresql://{user}:{pw}@{host}:{port}/{db_name}'
+
+# This checks Render's DATABASE_URL first, then falls back to your local_uri
+uri = os.getenv("DATABASE_URL", local_uri)
+
+# Fix for Render/SQLAlchemy compatibility
+if uri and uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+    
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
