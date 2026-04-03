@@ -7,7 +7,7 @@ import os
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-CORS(app)  # enable CORS for React
+CORS(app, resources={r"/*": {"origins": ["https://scheduler-three-mu.vercel.app", "http://localhost:3000"]}})  # enable CORS for nextjs frontend
 load_dotenv()  # Load the .env file
 
 # Access the .env variables
