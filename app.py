@@ -15,7 +15,7 @@ user = os.getenv("DB_USER")
 pw = os.getenv("DB_PASS")
 host = os.getenv("DB_HOST")
 port = os.getenv("DB_PORT")
-db = os.getenv("DB_NAME")
+db_name = os.getenv("DB_NAME")
 
 # Create the local fallback URI
 local_uri = f'postgresql://{user}:{pw}@{host}:{port}/{db_name}'
